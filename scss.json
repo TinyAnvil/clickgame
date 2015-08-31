@@ -1,0 +1,7 @@
+{
+  "enableAutoprefixer": true,
+  "autoprefixerOptions": {
+      "remove": false,
+      "cascade": false
+  }
+}
