@@ -4,21 +4,45 @@ var fire = {
 }
 var timer;
 
+function down(el) {
+  var i = 0;
+
+  fire.down = new Date().toISOString();
+  timer = Meteor.setInterval(function() {
+    i++
+    $('span', el).css('transform', 'scale('+ (1 + (i * (0.05 * i))) +')');
+  }, 100);
+}
+
+function up(el) {
+  fire.up = new Date().toISOString();
+  Meteor.clearInterval(timer);
+  $('span', el).css('transform', '');
+}
+
+Template.sayHello.rendered = function() {
+  $('.hello-box button').attr('unselectable','on').addClass('unselectable');
+}
+
 Template.sayHello.events({
   'mousedown .hello-box button': function(event) {
-    var i = 0;
-    fire.down = new Date().toISOString();
-
-    timer = Meteor.setInterval(function() {
-      i++
-      $('span', event.currentTarget).css('transform', 'scale('+ (1 + (i * (0.05 * i))) +')');
-    }, 100);
+    if (!Meteor.Device.isDesktop()) return false;
+    down(event.currentTarget);
   },
 
   'mouseup .hello-box button': function(event) {
-    fire.up = new Date().toISOString();
-    Meteor.clearInterval(timer);
-    $('span', event.currentTarget).css('transform', '');
+    if (!Meteor.Device.isDesktop()) return false;
+    up(event.currentTarget);
+  },
+
+  'touchstart .hello-box button': function(event) {
+    if (Meteor.Device.isDesktop()) return false;
+    down(event.currentTarget);
+  },
+
+  'touchend .hello-box button': function(event) {
+    if (Meteor.Device.isDesktop()) return false;
+    up(event.currentTarget);
   },
 
   'click .hello-box button': function(event) {
