@@ -15,6 +15,7 @@ body {
   align-items: center;
   flex-wrap: wrap;
   flex-direction: column;
+  position: relative;
 }
 
 .content {
@@ -27,35 +28,6 @@ body {
   font-weight: 700;
   width: 100%;
   margin-bottom: 1rem;
-}
-
-.hello-box {
-  width: 100%;
-
-  button {
-    appearance: none;
-    border: 1px solid currentColor;
-    color: $red;
-    background: none;
-    border-radius: 5px;
-    cursor: pointer;
-    padding: 0.5rem 1rem 0.5rem 0.5rem;
-    font-size: 1.2rem;
-    display: flex;
-    align-items: center;
-    line-height: 1.2;
-    outline: none;
-
-    &:before {
-      content: attr(count);
-      color: $white;
-      padding: 0 5px;
-      font-size: 0.8rem;
-      line-height: 20px;
-      height: 20px;
-      background-color: $red;
-      border-radius: 10px;
-      margin-right: 0.5rem;
-    }
-  }
+  position: relative;
+  z-index: 1;
 }

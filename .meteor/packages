@@ -20,3 +20,5 @@ ejson
 spacebars
 check
 seba:minifiers-autoprefixer
+momentjs:moment
+d3js:d3

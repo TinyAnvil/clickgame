@@ -1,23 +1,17 @@
 Meteor.methods({
-  'sayHello': function() {
+  'sayHello': function(doc) {
     var hello_doc = Hello.findOne();
 
     if (hello_doc) {
       return Hello.update(hello_doc._id, {
         $push: {
-          hello: {
-            date: new Date().toISOString()
-          }
+          hello: doc
         }
       });
     }
 
     return Hello.insert({
-      hello: [
-        {
-          date: new Date().toISOString()
-        }
-      ]
+      hello: [doc]
     });
   },
 
