@@ -1,7 +1,3 @@
-Meteor.publish('posts', function() {
-  if (this.userId) {
-    return Posts.find();
-  } else {
-    this.ready();
-  }
+Meteor.publish('hello', function() {
+  return Hello.find();
 });

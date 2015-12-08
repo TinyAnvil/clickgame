@@ -6,7 +6,6 @@
 
 fourseven:scss
 iron:router
-standard-minifiers
 meteor-base
 mobile-experience
 mongo
@@ -20,3 +19,4 @@ random
 ejson
 spacebars
 check
+seba:minifiers-autoprefixer
