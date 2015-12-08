@@ -18,7 +18,20 @@ Meteor.methods({
   'sayGoodbye': function() {
     var hello_doc = Hello.findOne();
 
-    if (hello_doc)
-      return Hello.remove(hello_doc._id);
+    if (hello_doc) {
+      Hello.remove(hello_doc._id);
+      return Meteor.call('seed');
+    }
+  },
+
+  'seed': function(i) {
+    i = i || 3;
+    
+    _.each(_.range(i), function() {
+      Meteor.call('sayHello', {
+        clickedAt: new Date().toISOString(),
+        clickDuration: _.random(0, 5000) 
+      });
+    });
   }
 });
