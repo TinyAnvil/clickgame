@@ -14,7 +14,7 @@ jquery@1.11.9
 tracker@1.1.0
 logging@1.1.14
 reload@1.1.10
-random@1.0.10
+random
 ejson@1.0.12
 spacebars@1.0.12
 check@1.2.3

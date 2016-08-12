@@ -1,33 +1,18 @@
 Meteor.methods({
-  'sayHello': function(doc) {
-    if (!doc.clickedAt || !doc.clickDuration)
-      return false;
+  sayHello: function(doc) {
+    if (doc.clickedAt && doc.clickDuration)
+      Hello.insert(doc);
+  },
 
-    var hello_doc = Hello.findOne();
-
-    if (hello_doc) {
-      return Hello.update(hello_doc._id, {
-        $push: {
-          hello: doc
-        }
-      });
-    }
-
-    return Hello.insert({
-      hello: [doc]
+  sayGoodbye: function(i) {
+    _.each(Hello.find().fetch(), function(doc) {
+      Hello.remove(doc._id);
     });
+
+    return Meteor.call('seed', i);
   },
 
-  'sayGoodbye': function(i) {
-    var hello_doc = Hello.findOne();
-
-    if (hello_doc) {
-      Hello.remove(hello_doc._id);
-      return Meteor.call('seed', i);
-    }
-  },
-
-  'seed': function(i) {
+  seed: function(i) {
     i = i || 3;
 
     _.each(_.range(i), function(i) {

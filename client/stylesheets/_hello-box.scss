@@ -1,29 +1,29 @@
 .hello-box {
-  width: 100%;
   position: relative;
   z-index: 1;
-  display: flex;
 
-  @include breakpoint($phone) {
-    justify-content: center;
+  .hello-title {
+    font-size: 5rem;
+    color: $white;
+    font-weight: 700;
+    margin-bottom: 1rem;
   }
-
-  button {
+  .hello-button {
     appearance: none;
     border: none;
-    box-shadow: 0 0 0 3px rgba($red, 0.5);
+    box-shadow: 0 0 0 5px rgba($red, 0.5);
     color: $white;
     background: $red;
     border-radius: 5px;
     cursor: pointer;
-    padding: 0.5rem 1rem 0.5rem 0.5rem;
+    padding: 0.8rem 1.2rem 0.8rem 0.8rem;
     font-size: 1.2rem;
     display: flex;
     align-items: center;
-    line-height: 1.2;
+    line-height: 1;
     outline: none;
 
-    span {
+    .hello-tag {
       color: $red;
       padding: 0 5px;
       font-size: 0.8rem;
@@ -31,8 +31,15 @@
       height: 20px;
       background-color: $white;
       border-radius: 10px;
-      margin-right: 0.5rem;
-      transition: transform .1s;
+      margin-right: 0.8rem;
+      transition: all 250ms;
     }
+  }
+
+  @include breakpoint($phone) {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
   }
 }
