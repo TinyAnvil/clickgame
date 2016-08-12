@@ -1,8 +1,8 @@
+var timer;
 var fire = {
   up: null,
   down: null
 }
-var timer;
 
 function down(el) {
   var i = 0;
@@ -18,10 +18,15 @@ function up(el) {
   fire.up = new Date().toISOString();
   Meteor.clearInterval(timer);
   $('span', el).css('transform', '');
+
+  Meteor.call('sayHello', {
+    clickedAt: fire.up,
+    clickDuration: moment(fire.up).diff(fire.down)
+  });
 }
 
 Template.sayHello.rendered = function() {
-  $('.hello-box button').attr('unselectable','on').addClass('unselectable');
+  $('.hello-box button').attr('unselectable', 'on').addClass('unselectable');
 }
 
 Template.sayHello.events({
@@ -43,13 +48,6 @@ Template.sayHello.events({
   'touchend .hello-box button': function(event) {
     if (Meteor.Device.isDesktop()) return false;
     up(event.currentTarget);
-  },
-
-  'click .hello-box button': function(event) {
-    Meteor.call('sayHello', {
-      clickedAt: fire.up,
-      clickDuration: moment(fire.up).diff(fire.down)
-    });
   }
 });
 
