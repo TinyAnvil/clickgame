@@ -22,4 +22,4 @@ seba:minifiers-autoprefixer@1.0.1
 momentjs:moment
 d3js:d3
 mystor:device-detection
-fourseven:scss@3.8.0_1
+fourseven:scss@=3.8.0_1
