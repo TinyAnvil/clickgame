@@ -10,9 +10,10 @@
 
   button {
     appearance: none;
-    border: 1px solid currentColor;
-    color: $red;
-    background: $white;
+    border: none;
+    box-shadow: 0 0 0 3px rgba($red, 0.5);
+    color: $white;
+    background: $red;
     border-radius: 5px;
     cursor: pointer;
     padding: 0.5rem 1rem 0.5rem 0.5rem;
@@ -23,12 +24,12 @@
     outline: none;
 
     span {
-      color: $white;
+      color: $red;
       padding: 0 5px;
       font-size: 0.8rem;
       line-height: 20px;
       height: 20px;
-      background-color: $red;
+      background-color: $white;
       border-radius: 10px;
       margin-right: 0.5rem;
       transition: transform .1s;

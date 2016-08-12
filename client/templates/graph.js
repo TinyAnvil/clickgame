@@ -1,9 +1,9 @@
 Template.graph.rendered = function() {
   var graphs = new Graphs();
-  
+
   Tracker.autorun(function() {
     graphs.draw();
-  });  
+  });
 }
 
 
@@ -47,15 +47,15 @@ Graphs.prototype.lineGraph = function(el, data) {
 
   var min = d3.min(data),
       max = d3.max(data);
-      
+
   var yScale = d3.scale.linear()
     .domain([min, max])
-    .range([height - 40, 40]);
+    .range([height - 20, 20]);
 
-  var xScale = d3.scale.linear()      
+  var xScale = d3.scale.linear()
     .domain([0, data.length - 1])
-    .range([0, width]);
-  
+    .range([20, width - 20]);
+
   var area = d3.svg.area()
     .x(function(d, i) { return xScale(i); })
     .y0(height)
@@ -112,7 +112,7 @@ Graphs.prototype.lineGraph = function(el, data) {
     .attr({
       cx: function(d, i) { return xScale(i); },
       cy: function(d, i) { return yScale(d); },
-      r: 3
+      r: 2
     });
 
   circles.exit().remove();

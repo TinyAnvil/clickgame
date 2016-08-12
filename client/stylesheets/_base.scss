@@ -16,6 +16,9 @@ body {
   flex-wrap: wrap;
   flex-direction: column;
   position: relative;
+  margin: 20px;
+  width: calc(100% - 40px);
+  height: calc(100% - 40px);
 }
 
 .content {
@@ -24,7 +27,7 @@ body {
 
 .hero-title {
   font-size: 5rem;
-  color: $red;
+  color: $white;
   font-weight: 700;
   width: 100%;
   margin-bottom: 1rem;

@@ -4,22 +4,22 @@
 # 'meteor add' and 'meteor remove' will edit this file for you,
 # but you can also edit it by hand.
 
-fourseven:scss
 iron:router
-meteor-base
-mobile-experience
-mongo
-blaze-html-templates
-session
-jquery
-tracker
-logging
-reload
-random
-ejson
-spacebars
-check
-seba:minifiers-autoprefixer
+meteor-base@1.0.4
+mobile-experience@1.0.4
+mongo@1.1.10
+blaze-html-templates@1.0.4
+session@1.1.6
+jquery@1.11.9
+tracker@1.1.0
+logging@1.1.14
+reload@1.1.10
+random@1.0.10
+ejson@1.0.12
+spacebars@1.0.12
+check@1.2.3
+seba:minifiers-autoprefixer@1.0.1
 momentjs:moment
 d3js:d3
 mystor:device-detection
+fourseven:scss@3.8.0_1
