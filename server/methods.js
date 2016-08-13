@@ -36,14 +36,12 @@ Meteor.methods({
     if (code !== Meteor.settings.env.key)
       throw new Meteor.Error(500, 'To execute this method you must pass the secret access key')
 
-    i = i || 10;
-
     _.each(_.range(i), function(i) {
-      var int = i*200;
+      var int = i * 200;
 
       Meteor.call('sayHello', {
         clickedAt: moment()._d,
-        clickDuration: _.random(int, int*1.05),
+        clickDuration: _.random(int, int * 1.05),
         _owner: Meteor.settings.env.key
       }, code);
     });
