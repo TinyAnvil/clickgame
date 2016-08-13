@@ -2,21 +2,23 @@ Meteor.methods({
   sayHello: function(doc, code) {
     if (!moment.isDate(doc.clickedAt) ||
         !_.isNumber(doc.clickDuration) ||
-        _.isNaN(doc.clickDuration) ||
-        typeof doc._owner !== 'string')
+        _.isNaN(doc.clickDuration))
       return false;
 
-    // var doc_count = Hello.find({
-    //   _owner: doc._owner,
-    //   clickedAt: {
-    //     $gte: moment(doc.clickedAt).subtract(10, 'seconds')._d
-    //   }
-    // }).count();
-    //
-    // if (doc_count >= 10 && code !== Meteor.settings.env.key)
-    //   return false;
+    doc._owner = Meteor.settings.env.key === code ? Meteor.settings.env.key : this.connection.clientAddress;
+
+    var doc_count = Hello.find({
+      _owner: doc._owner,
+      clickedAt: {
+        $gte: moment(doc.clickedAt).subtract(60, 'seconds')._d
+      }
+    }).count();
+
+    if (doc_count >= 10 && code !== Meteor.settings.env.key)
+      return false; // Allow any one user 10 requests per minute
 
     Hello.insert(doc);
+    return doc._owner;
   },
 
   sayGoodbye: function(i, code) {
@@ -42,7 +44,7 @@ Meteor.methods({
       Meteor.call('sayHello', {
         clickedAt: moment()._d,
         clickDuration: _.random(int, int*1.05),
-        _owner: 'ClickGame'
+        _owner: Meteor.settings.env.key
       }, code);
     });
   }

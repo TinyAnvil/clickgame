@@ -1,5 +1,6 @@
 Template.graph.rendered = function() {
   var graphs = new Graphs();
+      graphs.watch();
 
   Tracker.autorun(function() {
     graphs.draw();
@@ -7,18 +8,16 @@ Template.graph.rendered = function() {
 }
 
 
-Graphs = function() {
-  this.id = localStorage.getItem('ClickGame');
-  this.resize();
-}
+Graphs = function() {}
 
-Graphs.prototype.resize = function() {
+Graphs.prototype.watch = function() {
   $(window).resize(_.debounce(function() {
     this.draw();
   }.bind(this), 250));
 }
 
 Graphs.prototype.draw = function() {
+  this.IP = localStorage.getItem('ClickGame');
   this.lineGraph('.hello-graph', Hello.find({}, {sort: {clickedAt : -1}, limit: 500}).fetch());
 }
 
@@ -98,7 +97,7 @@ Graphs.prototype.lineGraph = function(el, raw_data) {
   halos
     .attr({
       'class': function(d) {
-        return self.id === d._owner ? 'halo mine' : 'halo'
+        return self.IP === d._owner ? 'halo mine' : 'halo'
       }
     })
     .transition()

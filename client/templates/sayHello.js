@@ -1,16 +1,7 @@
 var timer;
 var fire = {
   up: null,
-  down: null,
-  id: (function() {
-    if (localStorage.getItem('ClickGame') === null) {
-      var id = Random.id();
-      localStorage.setItem('ClickGame', id);
-      return id;
-    } else {
-      return localStorage.getItem('ClickGame');
-    }
-  })()
+  down: null
 }
 
 function down(event) {
@@ -50,8 +41,13 @@ function up(event) {
 
   Meteor.call('sayHello', {
     clickedAt: fire.up._d,
-    clickDuration: fire.up.diff(fire.down),
-    _owner: fire.id
+    clickDuration: fire.up.diff(fire.down)
+  }, function(err, IP) {
+    if (err) {
+      console.log(err);
+    } else {
+      localStorage.setItem('ClickGame', IP);
+    }
   });
 }
 
