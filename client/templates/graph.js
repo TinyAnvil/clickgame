@@ -17,12 +17,12 @@ Graphs.prototype.watch = function() {
 }
 
 Graphs.prototype.draw = function() {
-  this.IP = localStorage.getItem('ClickGame');
   this.lineGraph('.hello-graph', Hello.find({}, {sort: {clickedAt : -1}, limit: 500}).fetch());
 }
 
 Graphs.prototype.lineGraph = function(el, raw_data) {
-  var self = this;
+  var self = this,
+      IP = localStorage.getItem('ClickGame');
 
   var clean_data = _.map(raw_data, function(d) {
     return d.clickDuration;
@@ -97,7 +97,7 @@ Graphs.prototype.lineGraph = function(el, raw_data) {
   halos
     .attr({
       'class': function(d) {
-        return self.IP === d._owner ? 'halo mine' : 'halo'
+        return IP === d._owner ? 'halo mine' : 'halo'
       }
     })
     .transition()
