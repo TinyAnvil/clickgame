@@ -47,5 +47,9 @@ Meteor.methods({
         _owner: Meteor.settings.env.key
       }, code);
     });
+  },
+
+  getIP: function() {
+    return this.connection.clientAddress;
   }
 });

@@ -42,9 +42,6 @@ function up(event) {
   Meteor.call('sayHello', {
     clickedAt: fire.up._d,
     clickDuration: fire.up.diff(fire.down)
-  }, function(err, IP) {
-    if (!err && sessionStorage.getItem('ClickGame') === null)
-      sessionStorage.setItem('ClickGame', IP);
   });
 }
 

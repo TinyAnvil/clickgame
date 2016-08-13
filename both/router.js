@@ -9,4 +9,12 @@ Router.configure({
   }
 });
 
-Router.route('/', {name: 'home'});
+Router.route('/', {
+  name: 'home',
+  onAfterAction: function() {
+    Meteor.call('getIP', function(err, IP) {
+      if (!err && sessionStorage.getItem('ClickGame') === null)
+        sessionStorage.setItem('ClickGame', IP);
+    });
+  }
+});

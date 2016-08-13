@@ -30,6 +30,7 @@
   }
   .circle {
     fill: $red;
+    transition: all 250ms;
 
     &.gold {
       fill: $gold;
@@ -47,6 +48,7 @@
   .halo {
     fill: $black;
     stroke: $black;
+    transition: all 250ms;
 
     &.mine {
       fill: none;

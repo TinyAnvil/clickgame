@@ -98,11 +98,7 @@ Graphs.prototype.lineGraph = function(el, raw_data) {
     .attr({
       'class': function(d) {
         return IP === d._owner ? 'halo mine' : 'halo'
-      }
-    })
-    .transition()
-    .duration(250)
-    .attr({
+      },
       cx: function(d, i) { return xScale(i); },
       cy: function(d, i) { return yScale(d.clickDuration); },
       r: 3
@@ -131,11 +127,7 @@ Graphs.prototype.lineGraph = function(el, raw_data) {
         }
 
         return string;
-      }
-    })
-    .transition()
-    .duration(250)
-    .attr({
+      },
       cx: function(d, i) { return xScale(i); },
       cy: function(d, i) { return yScale(d.clickDuration); },
       r: 1.25
