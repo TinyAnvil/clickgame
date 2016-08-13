@@ -42,6 +42,7 @@ Meteor.methods({
   },
 
   getIP: function() {
+    console.log(this.connection);
     return this.connection.clientAddress;
   }
 });
