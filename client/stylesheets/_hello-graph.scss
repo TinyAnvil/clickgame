@@ -1,5 +1,5 @@
 .hello-graph {
-  background-color: $black;
+  background: $black;
   border-radius: 10px;
   width: calc(100% - 40px);
   height: calc(100% - 40px);
@@ -9,6 +9,9 @@
   z-index: 0;
   overflow: scroll;
   -webkit-overflow-scrolling: touch;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
   @include breakpoint($phone) {
     width: calc(100% - 20px);
@@ -19,6 +22,8 @@
 
   .line {
     stroke: rgba($red, 0.5);
+    stroke-width: 0.75;
+    fill: none;
   }
   .area {
     fill: rgba($red, 0.1);
@@ -26,15 +31,27 @@
   .circle {
     fill: $red;
 
-    &.mine {
-      fill: $mint;
+    &.gold {
+      fill: $gold;
+    }
+    &.silver {
+      fill: $silver;
+    }
+    &.bronze {
+      fill: $bronze;
+    }
+    &.garbage {
+      fill: $garbage;
     }
   }
   .halo {
     fill: $black;
+    stroke: $black;
 
     &.mine {
-      // stroke: $mint;
+      fill: none;
+      stroke: $red;
+      stroke-width: 0.75;
     }
   }
 }

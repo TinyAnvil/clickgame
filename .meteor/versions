@@ -65,6 +65,7 @@ reactive-var@1.0.10
 reload@1.1.10
 retry@1.0.8
 routepolicy@1.0.11
+sacha:spin@2.3.1
 seba:minifiers-autoprefixer@1.0.1
 session@1.1.6
 spacebars@1.0.12

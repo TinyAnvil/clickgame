@@ -13,41 +13,44 @@ var fire = {
   })()
 }
 
-function down(el) {
+function down(event) {
   var i = 0;
 
   timer = Meteor.setInterval(function() {
-    $('.hello-tag', el).css('transform', 'scale('+ (i > 200 ? (-9 + (i * 0.05)) : 1) +') rotate('+ (i / 5 * i) +'deg)');
+    $('.hello-tag', event.currentTarget).css('transform', 'scale('+ (i > 300 ? (-9 + (i * 0.05)) : 1) +') rotate('+ (i / 5 * i) +'deg)');
 
-    if (i > 400)
-      $('.hello-tag', el).css({
+    if (i > 500)
+      $('.hello-tag', event.currentTarget).css({
         color: '#FCEDDA',
         background: '#D32D2D'
       });
 
-    console.log(i);
-
     i++;
   }, 100);
 
-  fire.down = new Date().toISOString();
+  fire.down = moment();
 }
 
-function up(el) {
+function up(event) {
   Meteor.clearInterval(timer);
   timer = undefined;
 
-  $('.hello-tag', el).css({
+  $('.hello-tag', event.currentTarget).css({
     transform: '',
     color: '',
     background: ''
   });
 
-  fire.up = new Date().toISOString();
+  fire.up = moment();
+
+  if (event.isTrigger ||
+      !event.originalEvent ||
+      !event.view)
+    return false;
 
   Meteor.call('sayHello', {
-    clickedAt: fire.up,
-    clickDuration: moment(fire.up).diff(fire.down),
+    clickedAt: fire.up._d,
+    clickDuration: fire.up.diff(fire.down),
     _owner: fire.id
   });
 }
@@ -59,32 +62,32 @@ Template.sayHello.rendered = function() {
 Template.sayHello.events({
   'mousedown .hello-box button': function(event) {
     if (!Meteor.Device.isDesktop()) return false;
-    down(event.currentTarget);
+    down(event);
   },
 
   'mouseup .hello-box button': function(event) {
     if (!Meteor.Device.isDesktop()) return false;
-    up(event.currentTarget);
+    up(event);
   },
 
   'mouseleave .hello-box button': function(event) {
     if (!Meteor.Device.isDesktop() || !timer) return false;
-    up(event.currentTarget);
+    up(event);
   },
 
   'touchstart .hello-box button': function(event) {
     if (Meteor.Device.isDesktop()) return false;
-    down(event.currentTarget);
+    down(event);
   },
 
   'touchend .hello-box button': function(event) {
     if (Meteor.Device.isDesktop()) return false;
-    up(event.currentTarget);
+    up(event);
   }
 });
 
 Template.sayHello.helpers({
   count: function() {
-    return Hello.find().count();
+    return d3.sum(_.values(this));
   }
 });

@@ -19,7 +19,7 @@ Graphs.prototype.resize = function() {
 }
 
 Graphs.prototype.draw = function() {
-  this.lineGraph('.hello-graph', Hello.find().fetch());
+  this.lineGraph('.hello-graph', Hello.find({}, {sort: {clickedAt : -1}, limit: 500}).fetch());
 }
 
 Graphs.prototype.lineGraph = function(el, raw_data) {
@@ -29,7 +29,8 @@ Graphs.prototype.lineGraph = function(el, raw_data) {
     return d.clickDuration;
   });
 
-  var width = $(el).width() / clean_data.length > 20 ? $(el).width() : clean_data.length * 20,
+  var el_width = $(el).width(),
+      width = el_width / clean_data.length > 10 ? el_width : clean_data.length * 10,
       height = $(el).height(),
       svg = d3.select(el).select('svg');
 
@@ -42,11 +43,11 @@ Graphs.prototype.lineGraph = function(el, raw_data) {
 
   var yScale = d3.scale.linear()
     .domain([min, max])
-    .range([height - 20, 20]);
+    .range([height - (el_width <= 600 ? 10 : 20), (el_width <= 600 ? 10 : 20)]);
 
   var xScale = d3.scale.linear()
-    .domain([0, clean_data.length - 1])
-    .range([20, width - 20]);
+    .domain([clean_data.length - 1, 0])
+    .range([(el_width <= 600 ? 10 : 20), width - (el_width <= 600 ? 10 : 20)]);
 
   var area = d3.svg.area()
     .x(function(d, i) { return xScale(i); })
@@ -87,10 +88,7 @@ Graphs.prototype.lineGraph = function(el, raw_data) {
       .data([raw_data])
       .attr({
         'class': 'line',
-        d: line,
-        fill: 'none',
-        'stroke-width': 0.75,
-        'stroke-linecap': 'square'
+        d: line
       });
   }
 
@@ -108,7 +106,7 @@ Graphs.prototype.lineGraph = function(el, raw_data) {
     .attr({
       cx: function(d, i) { return xScale(i); },
       cy: function(d, i) { return yScale(d.clickDuration); },
-      r: 2
+      r: 3
     });
 
   halos.exit().remove();
@@ -117,17 +115,31 @@ Graphs.prototype.lineGraph = function(el, raw_data) {
       circles.enter().append('circle');
 
   circles
-  .attr({
-    'class': function(d) {
-      return self.id === d._owner ? 'circle mine' : 'circle'
-    }
-  })
+    .attr({
+      'class': function(d) {
+        var string = 'circle ';
+
+        if (d.clickDuration > 300000) {
+           string += 'gold';
+        } else if (d.clickDuration > 90000 &&
+                   d.clickDuration <= 300000) {
+          string += 'silver';
+        } else if (d.clickDuration > 30000 &&
+                   d.clickDuration <= 90000) {
+          string += 'bronze';
+        } else if (d.clickDuration <= 30000) {
+          string += 'garbage';
+        }
+
+        return string;
+      }
+    })
     .transition()
     .duration(250)
     .attr({
       cx: function(d, i) { return xScale(i); },
       cy: function(d, i) { return yScale(d.clickDuration); },
-      r: 1
+      r: 1.25
     });
 
   circles.exit().remove();
