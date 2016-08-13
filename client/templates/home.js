@@ -1,5 +1,10 @@
 Template.home.rendered = function() {
+  var graphs = new Graphs();
+      graphs.watch();
 
+  Tracker.autorun(function() {
+    graphs.draw(Hello.find({}, {sort: {clickedAt : -1}, limit: 500}).fetch());
+  }.bind(this));
 }
 
 Template.home.events({
@@ -8,7 +13,13 @@ Template.home.events({
 
 Template.home.helpers({
   medals: function() {
-    var hello = Hello.find().fetch();
+    // 10, 20, 30, 40
+
+    // _.each(this, function(d) {
+    //   console.log(d.clickDuration);
+    // });
+
+    var hello = this.hello;
 
     return {
       gold: hello.filter(function(d) {

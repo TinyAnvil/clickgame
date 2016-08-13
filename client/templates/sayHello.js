@@ -34,11 +34,8 @@ function up(event) {
 
   Meteor.call('sayHello', fire.up.diff(fire.down));
 
-  clear(event);
-}
-
-function clear(event) {
   Meteor.clearInterval(fire.timer);
+
   fire = {
     i: null,
     timer: null,
@@ -86,6 +83,6 @@ Template.sayHello.events({
 
 Template.sayHello.helpers({
   count: function() {
-    return d3.sum(_.values(this));
+    return this.hello.length;
   }
 });
