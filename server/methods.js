@@ -1,24 +1,26 @@
 Meteor.methods({
-  sayHello: function(doc, code) {
-    if (!moment.isDate(doc.clickedAt) ||
-        !_.isNumber(doc.clickDuration) ||
-        _.isNaN(doc.clickDuration))
+  sayHello: function(duration, code) {
+    if (!_.isNumber(duration) ||
+        _.isNaN(duration))
       return false;
 
-    doc._owner = Meteor.settings.env.key === code ? Meteor.settings.env.key : this.connection.clientAddress;
+    var doc = {
+      clickedAt: moment()._d,
+      clickDuration: duration,
+      _owner: Meteor.settings.env.key === code ? Meteor.settings.env.key : this.connection.clientAddress
+    }
 
-    var doc_count = Hello.find({
+    var recent = Hello.find({
       _owner: doc._owner,
       clickedAt: {
-        $gte: moment(doc.clickedAt).subtract(60, 'seconds')._d
+        $gte: moment(doc.clickedAt).subtract(30, 'seconds')._d
       }
-    }).count();
+    }).fetch();
 
-    if (doc_count >= 10 && code !== Meteor.settings.env.key)
-      return false; // Allow any one user 10 requests per minute
+    if (recent.length >= 10 && code !== Meteor.settings.env.key)
+      return false; // Allow any one user 10 requests per minute unless it's been 10 seconds since the last request
 
     Hello.insert(doc);
-    return doc._owner;
   },
 
   sayGoodbye: function(i, code) {
@@ -39,16 +41,11 @@ Meteor.methods({
     _.each(_.range(i), function(i) {
       var int = i * 200;
 
-      Meteor.call('sayHello', {
-        clickedAt: moment()._d,
-        clickDuration: _.random(int, int * 1.05),
-        _owner: Meteor.settings.env.key
-      }, code);
+      Meteor.call('sayHello', _.random(int, int * 1.05), code);
     });
   },
 
   getIP: function() {
-    console.log(this.connection);
     return this.connection.clientAddress;
   }
 });

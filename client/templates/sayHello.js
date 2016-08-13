@@ -32,10 +32,7 @@ function up(event) {
 
   fire.up = moment();
 
-  Meteor.call('sayHello', {
-    clickedAt: fire.up._d,
-    clickDuration: fire.up.diff(fire.down)
-  });
+  Meteor.call('sayHello', fire.up.diff(fire.down));
 
   clear(event);
 }
