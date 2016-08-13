@@ -22,7 +22,7 @@
 
   .line {
     stroke: rgba($red, 0.5);
-    stroke-width: 0.75;
+    stroke-width: 1;
     fill: none;
   }
   .area {
@@ -47,13 +47,23 @@
   }
   .halo {
     fill: $black;
-    stroke: $black;
     transition: all 250ms;
 
     &.mine {
-      fill: none;
-      stroke: $red;
       stroke-width: 0.75;
+
+      &.gold {
+        stroke: $gold;
+      }
+      &.silver {
+        stroke: $silver;
+      }
+      &.bronze {
+        stroke: $bronze;
+      }
+      &.garbage {
+        stroke: $garbage;
+      }
     }
   }
 }

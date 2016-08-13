@@ -97,7 +97,21 @@ Graphs.prototype.lineGraph = function(el, raw_data) {
   halos
     .attr({
       'class': function(d) {
-        return IP === d._owner ? 'halo mine' : 'halo'
+        var string = IP === d._owner ? 'halo mine ' : 'halo ';
+
+        if (d.clickDuration > 300000) {
+           string += 'gold';
+        } else if (d.clickDuration > 90000 &&
+                   d.clickDuration <= 300000) {
+          string += 'silver';
+        } else if (d.clickDuration > 30000 &&
+                   d.clickDuration <= 90000) {
+          string += 'bronze';
+        } else if (d.clickDuration <= 30000) {
+          string += 'garbage';
+        }
+
+        return string;
       },
       cx: function(d, i) { return xScale(i); },
       cy: function(d, i) { return yScale(d.clickDuration); },
@@ -130,7 +144,7 @@ Graphs.prototype.lineGraph = function(el, raw_data) {
       },
       cx: function(d, i) { return xScale(i); },
       cy: function(d, i) { return yScale(d.clickDuration); },
-      r: 1.25
+      r: 1
     });
 
   circles.exit().remove();
