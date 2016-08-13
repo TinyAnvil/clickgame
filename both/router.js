@@ -2,7 +2,10 @@ Router.configure({
   layoutTemplate: 'layout',
   loadingTemplate: 'loading',
   waitOn: function() {
-    return Meteor.subscribe('hello');
+    return [
+      Meteor.subscribe('myHello'),
+      Meteor.subscribe('theirHello')
+    ]
   }
 });
 
