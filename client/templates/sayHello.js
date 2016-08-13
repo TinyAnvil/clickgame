@@ -1,47 +1,58 @@
-var timer;
 var fire = {
+  i: null,
+  timer: null,
   up: null,
   down: null
-}
+};
 
 function down(event) {
-  var i = 0;
+  if (fire.timer || fire.i)
+    return false;
 
-  timer = Meteor.setInterval(function() {
-    $('.hello-tag', event.currentTarget).css('transform', 'scale('+ (i > 300 ? (-9 + (i * 0.05)) : 1) +') rotate('+ (i / 5 * i) +'deg)');
+  fire.timer = Meteor.setInterval(function() {
+    $('.hello-tag', event.currentTarget).css('transform', 'scale('+ (fire.i > 300 ? (-(300 * 0.05 - 1) + (fire.i * 0.05)) : 1) +') rotate('+ (fire.i / 5 * fire.i) +'deg)');
 
-    if (i > 500)
+    if (fire.i > 500)
       $('.hello-tag', event.currentTarget).css({
         color: '#FCEDDA',
         background: '#D32D2D'
       });
 
-    i++;
+    fire.i++;
   }, 100);
 
   fire.down = moment();
 }
 
 function up(event) {
-  Meteor.clearInterval(timer);
-  timer = undefined;
-
-  $('.hello-tag', event.currentTarget).css({
-    transform: '',
-    color: '',
-    background: ''
-  });
-
-  fire.up = moment();
-
   if (event.isTrigger ||
       !event.originalEvent ||
       !event.view)
     return false;
 
+  fire.up = moment();
+
   Meteor.call('sayHello', {
     clickedAt: fire.up._d,
     clickDuration: fire.up.diff(fire.down)
+  });
+
+  clear(event);
+}
+
+function clear(event) {
+  Meteor.clearInterval(fire.timer);
+  fire = {
+    i: null,
+    timer: null,
+    up: null,
+    down: null
+  };
+
+  $('.hello-tag', event.currentTarget).css({
+    transform: '',
+    color: '',
+    background: ''
   });
 }
 
@@ -61,7 +72,7 @@ Template.sayHello.events({
   },
 
   'mouseleave .hello-box button': function(event) {
-    if (!Meteor.Device.isDesktop() || !timer) return false;
+    if (!Meteor.Device.isDesktop()) return false;
     up(event);
   },
 
