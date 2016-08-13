@@ -43,8 +43,8 @@ function up(event) {
     clickedAt: fire.up._d,
     clickDuration: fire.up.diff(fire.down)
   }, function(err, IP) {
-    if (!err && localStorage.getItem('ClickGame') === null)
-      localStorage.setItem('ClickGame', IP);
+    if (!err && sessionStorage.getItem('ClickGame') === null)
+      sessionStorage.setItem('ClickGame', IP);
   });
 }
 

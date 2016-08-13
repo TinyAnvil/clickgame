@@ -22,7 +22,7 @@ Graphs.prototype.draw = function() {
 
 Graphs.prototype.lineGraph = function(el, raw_data) {
   var self = this,
-      IP = localStorage.getItem('ClickGame');
+      IP = sessionStorage.getItem('ClickGame');
 
   var clean_data = _.map(raw_data, function(d) {
     return d.clickDuration;
