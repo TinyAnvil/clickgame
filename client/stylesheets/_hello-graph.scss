@@ -41,16 +41,17 @@
     &.bronze {
       fill: $bronze;
     }
-    &.garbage {
-      fill: $garbage;
-    }
+    // &.garbage {
+    //   fill: $garbage;
+    // }
   }
   .halo {
     fill: $black;
     transition: all 250ms;
 
     &.mine {
-      stroke-width: 0.75;
+      stroke-width: 1.5;
+      stroke: $red;
 
       &.gold {
         stroke: $gold;
@@ -61,9 +62,9 @@
       &.bronze {
         stroke: $bronze;
       }
-      &.garbage {
-        stroke: $garbage;
-      }
+      // &.garbage {
+      //   stroke: $red;
+      // }
     }
   }
 }

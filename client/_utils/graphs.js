@@ -102,8 +102,10 @@ Graphs.prototype.lineGraph = function(el) {
         return string;
       },
       cx: function(d, i) { return xScale(i); },
-      cy: function(d, i) { return yScale(d); },
-      r: 3
+      cy: function(d) { return yScale(d); },
+      r: function(d) {
+        return d <= 30000 ? 3 : 4;
+      }
     });
 
   halos.exit().remove();
@@ -131,8 +133,10 @@ Graphs.prototype.lineGraph = function(el) {
         return string;
       },
       cx: function(d, i) { return xScale(i); },
-      cy: function(d, i) { return yScale(d); },
-      r: 1
+      cy: function(d) { return yScale(d); },
+      r: function(d) {
+        return d <= 30000 ? 1 : 2;
+      }
     });
 
   circles.exit().remove();
