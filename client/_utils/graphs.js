@@ -2,14 +2,14 @@ Graphs = function() {}
 
 Graphs.prototype.watch = function() {
   $(window).resize(_.debounce(function() {
-    this.draw(this.data);
+    this.draw();
   }.bind(this), 250));
 }
 
 Graphs.prototype.draw = function(data, IP) {
-  this.IP = IP;
-  this.raw = data;
-  this.data = _.map(data, function(d) {return d.clickDuration});
+  this.IP = IP || this.IP;
+  this.raw = data || this.raw;
+  this.data = _.map(this.raw, function(d) {return d.clickDuration}) || this.data;
   this.lineGraph('.hello-graph', data);
 }
 
