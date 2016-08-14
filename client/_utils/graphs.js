@@ -6,15 +6,15 @@ Graphs.prototype.watch = function() {
   }.bind(this), 250));
 }
 
-Graphs.prototype.draw = function(data) {
+Graphs.prototype.draw = function(data, IP) {
+  this.IP = IP;
   this.raw = data;
   this.data = _.map(data, function(d) {return d.clickDuration});
   this.lineGraph('.hello-graph', data);
 }
 
 Graphs.prototype.lineGraph = function(el) {
-  var self = this,
-      IP = sessionStorage.getItem('ClickGame');
+  var self = this;
 
   var el_width = $(el).width(),
       width = el_width / this.data.length > 10 ? el_width : this.data.length * 10,
@@ -85,7 +85,7 @@ Graphs.prototype.lineGraph = function(el) {
   halos
     .attr({
       'class': function(d, i) {
-        var string = IP === self.raw[i]._owner ? 'halo mine ' : 'halo ';
+        var string = self.IP === self.raw[i]._owner ? 'halo mine ' : 'halo ';
 
         if (d > 300000) {
            string += 'gold';

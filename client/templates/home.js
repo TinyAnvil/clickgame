@@ -1,10 +1,12 @@
 Template.home.rendered = function() {
-  var graphs = new Graphs();
-      graphs.watch();
+  Meteor.call('connection', function(err, IP) {
+    var graphs = new Graphs();
+        graphs.watch();
 
-  Tracker.autorun(function() {
-    graphs.draw(Hello.find({}, {sort: {clickedAt : -1}, limit: 500}).fetch());
-  }.bind(this));
+    Tracker.autorun(function() {
+      graphs.draw(Hello.find({}, {sort: {clickedAt : -1}, limit: 500}).fetch(), IP);
+    }.bind(this));
+  });
 }
 
 Template.home.events({

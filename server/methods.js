@@ -7,7 +7,7 @@ Meteor.methods({
     var doc = {
       clickedAt: moment()._d,
       clickDuration: duration,
-      _owner: Meteor.settings.env.key === code ? Meteor.settings.env.key : this.connection.clientAddress
+      _owner: Meteor.settings.env.key === code ? Meteor.settings.env.key : Meteor.call('connection', this.connection)
     }
 
     var recent = Hello.find({
@@ -41,8 +41,8 @@ Meteor.methods({
     });
   },
 
-  getIP: function() {
-    console.log(this.connection);
-    return this.connection.clientAddress;
+  connection: function(con) {
+    con = con || this.connection;
+    return (con.clientAddress+con.httpHeaders['user-agent']).replace(/[^a-zA-Z0-9]/g, '');
   }
 });

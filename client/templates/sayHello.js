@@ -51,7 +51,7 @@ function up(event) {
 }
 
 Template.sayHello.rendered = function() {
-  $('.hello-box button').attr('unselectable', 'on').addClass('unselectable');
+  
 }
 
 Template.sayHello.events({
