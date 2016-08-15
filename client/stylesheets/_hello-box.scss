@@ -36,6 +36,11 @@
       transition: all 1000ms;
     }
   }
+  .hello-hash {
+    display: inline-block;
+    margin-top: 0.75rem;
+    color: $white;
+  }
 
   @include breakpoint($phone) {
     display: flex;
