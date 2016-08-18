@@ -1,6 +1,7 @@
 Meteor.methods({
   sayHello: function(duration, code) {
     if (!_.isNumber(duration) ||
+        !_.isFinite(duration) ||
         _.isNaN(duration))
       return false;
 
