@@ -2,7 +2,8 @@ Meteor.methods({
   sayHello: function(duration, code) {
     if (!_.isNumber(duration) ||
         !_.isFinite(duration) ||
-        _.isNaN(duration))
+        _.isNaN(duration) ||
+        duration < 0)
       return false;
 
     var doc = {
