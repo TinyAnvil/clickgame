@@ -9,7 +9,3 @@ Meteor.publish('theirHello', function() {
     }
   });
 });
-
-Meteor.publish('hello', function() {
-  return Hello.find();
-});

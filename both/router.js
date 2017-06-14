@@ -4,8 +4,7 @@ Router.configure({
   waitOn: function() {
     return [
       Meteor.subscribe('myHello'),
-      Meteor.subscribe('theirHello'),
-      Meteor.subscribe('hello')
+      Meteor.subscribe('theirHello')
     ]
   }
 });
