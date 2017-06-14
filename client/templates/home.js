@@ -7,6 +7,8 @@ Template.home.rendered = function() {
       graphs.draw(Hello.find({}, {sort: {clickedAt : -1}, limit: 500}).fetch(), IP);
     }.bind(this));
   });
+
+  console.log( JSON.stringify(Hello.find().fetch()) );
 }
 
 Template.home.events({
