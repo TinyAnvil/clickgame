@@ -1,4 +1,5 @@
 .meteor/
 node_modules/
-settings.json
+.deploy-*
+dev.json
 *.sketch
