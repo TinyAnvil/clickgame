@@ -7,7 +7,7 @@
 iron:router
 meteor-base@1.1.0
 mobile-experience@1.0.4
-mongo@1.1.18
+mongo@1.1.19
 blaze-html-templates@1.0.4
 session@1.1.7
 jquery@1.11.10
@@ -24,5 +24,6 @@ d3js:d3
 mystor:device-detection
 fourseven:scss@=3.8.0_1
 sacha:spin
-shell-server@0.2.3
-dynamic-import
+shell-server@0.2.4
+dynamic-import@0.1.1
+http
