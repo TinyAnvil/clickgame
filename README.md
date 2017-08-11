@@ -9,9 +9,7 @@
 // Create a dev.json file at the project root
 
 {
-  "env": {
-    "key": "abc_123_secret_admin_code"
-  }
+  "admin": "abc_123_secret_admin_code"
 }
 ```
 

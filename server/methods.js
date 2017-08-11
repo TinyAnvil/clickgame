@@ -1,6 +1,6 @@
 Meteor.methods({
   sayHello(id, code, duration) {
-    const owner = Meteor.settings.env.key === code ? code : Meteor.call('connection', this.connection);
+    const owner = Meteor.settings.admin === code ? code : Meteor.call('connection', this.connection);
     const hello = Hello.findOne({_id: id});
     const now = moment();
 
@@ -13,7 +13,7 @@ Meteor.methods({
         clickDuration: now.diff(hello.clickedAt)
       }});
     }
-    
+
     // Otherwise create a new hello item
     else {
 
@@ -23,18 +23,18 @@ Meteor.methods({
         _owner: owner,
         clickedAt: {$gte: now.clone().subtract(10, 'seconds').toDate()}
       }).count();
-      
+
       if (
-        Meteor.settings.env.key !== owner && 
+        Meteor.settings.admin !== owner &&
         recent >= 10
       ) throw new Meteor.Error(500, 'Rage clicking is not supported. Try holding the button');
       ////
-  
+
       return Hello.insert({
         _id: id,
         _owner: owner,
         clickedAt: now.toDate(),
-        clickDuration: Meteor.settings.env.key === owner ? duration : 0
+        clickDuration: Meteor.settings.admin === owner ? duration : 0
       });
     }
   },
@@ -62,7 +62,7 @@ Meteor.methods({
   },
 
   seed(i, code) {
-    if (code !== Meteor.settings.env.key)
+    if (code !== Meteor.settings.admin)
       throw new Meteor.Error(500, 'To execute this method you must pass the secret access key')
 
     _.each(_.range(i), (i) => {
@@ -72,7 +72,7 @@ Meteor.methods({
   },
 
   reap(i, code) {
-    if (code !== Meteor.settings.env.key)
+    if (code !== Meteor.settings.admin)
       throw new Meteor.Error(500, 'To execute this method you must pass the secret access key')
 
     Hello.remove({});
