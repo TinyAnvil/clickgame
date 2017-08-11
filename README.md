@@ -5,8 +5,18 @@
 [http://clickga.me](http://clickga.me)
 
 ## Install
+```json
+// Create a dev.json file at the project root
+
+{
+  "env": {
+    "key": "abc_123_secret_admin_code"
+  }
+}
+```
+
 ```bash
-meteor
+meteor --settings dev.json
 ```
 
 Pew pew pew!!
