@@ -6,8 +6,8 @@ Graphs.prototype.watch = function() {
   }.bind(this), 250));
 }
 
-Graphs.prototype.draw = function(data, IP) {
-  this.IP = IP || this.IP;
+Graphs.prototype.draw = function(data, owner) {
+  this.owner = owner || this.owner;
   this.raw = data || this.raw;
   this.data = _.map(this.raw, function(d) {return d.clickDuration}) || this.data;
   this.lineGraph('.hello-graph', data);
@@ -85,7 +85,7 @@ Graphs.prototype.lineGraph = function(el) {
   halos
     .attr({
       'class': function(d, i) {
-        var string = self.IP === self.raw[i]._owner ? 'halo mine ' : 'halo ';
+        var string = self.owner === self.raw[i]._owner ? 'halo mine ' : 'halo ';
 
         if (d > 300000) {
            string += 'gold';
@@ -95,8 +95,6 @@ Graphs.prototype.lineGraph = function(el) {
         } else if (d > 30000 &&
                    d <= 90000) {
           string += 'bronze';
-        } else if (d <= 30000) {
-          string += 'garbage';
         }
 
         return string;
@@ -126,8 +124,6 @@ Graphs.prototype.lineGraph = function(el) {
         } else if (d > 30000 &&
                    d <= 90000) {
           string += 'bronze';
-        } else if (d <= 30000) {
-          string += 'garbage';
         }
 
         return string;

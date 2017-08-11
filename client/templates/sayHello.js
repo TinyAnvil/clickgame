@@ -1,15 +1,18 @@
-var fire = {
+let fire = {
   i: null,
-  timer: null,
-  up: null,
-  down: null
-};
+  id: null,
+  timer: null
+}
 
 function down(event) {
-  if (fire.timer || fire.i)
-    return false;
+  if (
+    fire.id ||
+    event.isTrigger ||
+    !event.originalEvent ||
+    !event.view
+  ) return false;
 
-  fire.timer = Meteor.setInterval(function() {
+  fire.timer = Meteor.setInterval(() => {
     $('.hello-tag', event.currentTarget).css('transform', 'scale('+ (fire.i > 300 ? (-(300 * 0.05 - 1) + (fire.i * 0.05)) : 1) +') rotate('+ (fire.i / 5 * fire.i) +'deg)');
 
     if (fire.i > 500)
@@ -21,26 +24,28 @@ function down(event) {
     fire.i++;
   }, 100);
 
-  fire.down = moment();
+  fire.id = Random.id(44);
+  Meteor.call('sayHello', fire.id);
+
+  // Meteor.setInterval(function() {Meteor.call('sayHello', Random.id(), (err, res) => {Meteor.call('sayHello', res)})}, 100);
 }
 
 function up(event) {
-  if (event.isTrigger ||
-      !event.originalEvent ||
-      !event.view)
-    return false;
+  if (
+    event.isTrigger ||
+    !event.originalEvent ||
+    !event.view ||
+    !fire.id
+  ) return false;
 
-  fire.up = moment();
-
-  Meteor.call('sayHello', fire.up.diff(fire.down));
+  Meteor.call('sayHello', fire.id);
 
   Meteor.clearInterval(fire.timer);
 
   fire = {
     i: null,
-    timer: null,
-    up: null,
-    down: null
+    id: null,
+    timer: null
   };
 
   $('.hello-tag', event.currentTarget).css({
@@ -50,39 +55,37 @@ function up(event) {
   });
 }
 
-Template.sayHello.rendered = function() {
+Template.sayHello.rendered = () => {
   
 }
 
 Template.sayHello.events({
-  'mousedown .hello-box button': function(event) {
+  'mousedown .hello-box button'(event) {
     if (!Meteor.Device.isDesktop()) return false;
     down(event);
   },
 
-  'mouseup .hello-box button': function(event) {
+  'mouseup .hello-box button'(event) {
     if (!Meteor.Device.isDesktop()) return false;
     up(event);
   },
 
-  'mouseleave .hello-box button': function(event) {
+  'mouseleave .hello-box button'(event) {
     if (!Meteor.Device.isDesktop()) return false;
     up(event);
   },
 
-  'touchstart .hello-box button': function(event) {
+  'touchstart .hello-box button'(event) {
     if (Meteor.Device.isDesktop()) return false;
     down(event);
   },
 
-  'touchend .hello-box button': function(event) {
+  'touchend .hello-box button'(event) {
     if (Meteor.Device.isDesktop()) return false;
     up(event);
   }
 });
 
 Template.sayHello.helpers({
-  count: function() {
-    return this.hello.length;
-  }
+  
 });

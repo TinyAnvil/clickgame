@@ -1,4 +1,3 @@
-.meteor/
 node_modules/
 .deploy-*
 dev.json

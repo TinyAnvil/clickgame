@@ -18,7 +18,7 @@ random@1.0.10
 ejson@1.0.13
 spacebars@1.0.12
 check@1.2.5
-seba:minifiers-autoprefixer@1.0.1
+seba:minifiers-autoprefixer
 momentjs:moment
 d3js:d3
 mystor:device-detection
@@ -27,3 +27,4 @@ sacha:spin
 shell-server@0.2.4
 dynamic-import@0.1.1
 http
+reactive-var

@@ -52,9 +52,6 @@
   .bronze:before {
     background-color: $bronze;
   }
-  .garbage:before {
-    background-color: $garbage;
-  }
 
   @include breakpoint($phone) {
     padding: 20px;

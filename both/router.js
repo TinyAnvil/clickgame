@@ -10,10 +10,5 @@ Router.configure({
 });
 
 Router.route('/', {
-  name: 'home',
-  data: function() {
-    return {
-      hello: Hello.find({}, {sort: {clickDuration: -1}}).fetch()
-    }
-  }
+  name: 'home'
 });
